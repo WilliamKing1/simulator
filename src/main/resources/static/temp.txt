@@ -1,0 +1,31 @@
+function(obj,callback){
+                    var jsonstr="[]";
+                    var jsonarray=eval('('+jsonstr+')');
+                    $.ajax({
+                        type:"GET",
+                        url:"/v1/simulator/services",
+                        dataType:"json",
+                        asyc:false,
+                        success:function(result){
+                            var arrays=result;
+                            for(var i=0;i<arrays.length;i++){
+                                console.log(arrays[i]);
+                                var arr={
+                                    "id":arrays[i].id,
+                                    "parent":arrays[i].parent,
+                                    "text":arrays[i].text
+
+
+                                }
+                                jsonarray.push(arr);
+                            }
+
+                        }
+                    });
+                    callback.call(this,jsonarray);
+                    console.log(jsonarray);
+
+                }
+
+                curl -X PUT --header 'Content-Type: application/json' --header 'Accept: */*' -d '{ "description": "","messageId": "","parentId": "ff80808169519e740169519ea0a30001","requestSchema": "","responseSchema": "","serviceName": "ListofAccountforCustomer","type": "json","version": "0.0.1"}' 'http://localhost:8080/v1/simulator/service'
+                curl -X PATCH --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ "description": "","messageId": "","parentId":"ff8080816952638401695263d4cb0000","requestSchema": "","responseSchema": "","serviceName": "v0.0.2", "type": "json", "version": "v0.0.2"}' 'http://localhost:8080/v1/simulator/service/ff8080816952638401695263d4cb0000'

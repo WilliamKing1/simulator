@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CBK Simulator</title>
+
+
+
+
+
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Font Awesome CSS -->
+    <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Custom CSS -->
+    <link href="assets/css/simulator.style.css" rel="stylesheet" type="text/css" />
+
+    <!-- BEGIN CSS for this page -->
+    <link rel="stylesheet" type="text/css" href="assets/plugins/datatables/dataTables.bootstrap4.min.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/plugins/jstree/style.css"/>
+
+    <!-- END CSS for this page -->
+
+</head>
+
+<body class="adminbody">
+
+<div id="main">
+
+    <!-- top bar navigation -->
+    <div class="headerbar">
+
+        <!-- LOGO -->
+        <div class="headerbar-left">
+            <a href="#" class="logo"> <span>Simulator</span></a>
+        </div>
+
+        <nav class="navbar-custom">
+
+            <ul class="list-inline float-right mb-0">
+
+
+            <li class="list-inline-item">
+                <button type="button" class="btn btn-primary navbar-btn" href="#addModal" data-target="#addModal" data-toggle="modal">Add</button>
+
+            </li>
+
+
+
+
+
+
+            </ul>
+
+            <ul class="list-inline menu-left mb-0">
+                <li class="float-left">
+                    <button class="button-menu-mobile open-left">
+                        <i class="fa fa-fw fa-bars"></i>
+                    </button>
+                </li>
+            </ul>
+
+        </nav>
+
+    </div>
+    <!-- End Navigation -->
+
+
+    <!-- Left Sidebar -->
+    <div class="left main-sidebar">
+
+        <div class="sidebar-inner leftscroll">
+
+            <div class="sidebar-menu">
+                <div id="serviceTree" class="row col-md-12">
+
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+        </div>
+
+    </div>
+    <!-- End Sidebar -->
+
+
+    <div class="content-page">
+
+        <!-- Start content -->
+        <div class="content">
+
+            <div class="container-fluid">
+
+
+
+            </div>
+            <!-- END container-fluid -->
+
+        </div>
+        <!-- END content -->
+
+    </div>
+    <!-- END content-page -->
+
+    <footer class="footer">
+		<span class="text-right">
+		Copyright <a target="_blank" href="#">Citi GCB CBK</a>
+		</span>
+        <span class="float-right">
+		Powered by <a target="_blank" href="#"><b>CBK Simulator</b></a>
+		</span>
+    </footer>
+
+
+</div>
+<!-- END main -->
+
+<script src="assets/js/modernizr.min.js"></script>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/moment.min.js"></script>
+
+<script src="assets/js/bootstrap.min.js"></script>
+
+<script src="assets/js/detect.js"></script>
+<script src="assets/js/fastclick.js"></script>
+<script src="assets/js/jquery.blockUI.js"></script>
+<script src="assets/js/jquery.nicescroll.js"></script>
+
+<!-- App js -->
+<script src="assets/js/pikeadmin.js"></script>
+
+<!-- BEGIN Java Script for this page -->
+<script src="assets/plugins/chart.js/chart.min.js"></script>
+<script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="assets/plugins/jstree/jstree.js"></script>
+
+
+<script>
+    $(document).ready(function() {
+        $("#serviceTree").jstree({
+
+            "core": {
+                "themes":{
+                    "responsive":false
+                },
+                "data": {
+                    "url":"/v1/simulator/services",
+                    "datatypes":"json"
+                }
+            },
+            "types":{
+                "default":{
+                    "icon": "fa fa-folder-open"
+                },
+                "file":{
+                    "icon": "fa fa-file"
+                }
+            },
+            "plugins":['types']
+        });
+
+        // 展开节点
+        $("#jstree").on("loaded.jstree", function (event, data) {
+            // 展开所有节点
+            //$('#jstree').jstree('open_all');
+            // 展开指定节点
+            //data.instance.open_node(1);     // 单个节点 （1 是顶层的id）
+            data.instance.open_node([1, 10]); // 多个节点 (展开多个几点只有在一次性装载后所有节点后才可行）
+        });
+
+       /* // 所有节点都加载完后
+        $("#jstree").on("ready.jstree", function (event, data) {
+            //alert('all ok');
+            data.instance.open_node(1); // 展开root节点
+            //// 隐藏根节点 http://stackoverflow.com/questions/10429876/how-to-hide-root-node-from-jstree
+            $("#1_anchor").css("visibility", "hidden");
+            $("li#1").css("position", "relative")
+            $("li#1").css("top", "-20px")
+            $("li#1").css("left", "-20px")
+            $(".jstree-last .jstree-icon").first().hide();
+        });*/
+
+        // 获得点击节点的id
+        $('#jstree').on("changed.jstree", function (e, data) {
+            console.log("The selected nodes are:");
+            console.log(data.selected);
+            alert('node.id is:' + data.node.id);
+            alert('node.text is:'+data.node.text);
+            console.log(data);
+
+            // TODO: 传递给Tab
+            //$.ajax({
+            //    'url': 'Home/GetTreeData/',
+            //    'data': { 'id': data.node.id }
+            //});
+        });
+
+    } );
+</script>
+
+
+
+</body>
+</html>
