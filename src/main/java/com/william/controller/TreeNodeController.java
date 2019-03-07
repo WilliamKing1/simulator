@@ -3,6 +3,7 @@ package com.william.controller;
 import com.william.entity.TreeNode;
 import com.william.pojo.Node;
 import com.william.pojo.ServiceDetails;
+import com.william.pojo.TriggerServiceDetails;
 import com.william.service.TreeNodeService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,15 +83,14 @@ public class TreeNodeController {
     @ApiOperation(value = "invoke service based on the service request ")
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "serviceid",value = "node id",dataType = "String",paramType = "path",example = "**"),
-            @ApiImplicitParam(name = "requestDetails",value = "",dataType = "String",paramType = "body",example = "**")
+            @ApiImplicitParam(name = "serviceid",value = "serviceid",dataType = "String",paramType = "path",example = "**"),
+            @ApiImplicitParam(name = "requestDetails",value = "",dataType = "TriggerServiceDetails",paramType = "body",example = "**")
     })
     @ApiResponses({
             @ApiResponse(code=400,message = "incorrect request"),
             @ApiResponse(code=404,message="invalid service id ")})
-    @GetMapping("/service/{serviceid}/invoke")
-
-    public Object invoke(@PathVariable String serviceId,@RequestBody String requestDetails){
+    @PostMapping("/service/{serviceid}/invoke")
+    public Object invoke(@PathVariable String serviceId,@RequestBody TriggerServiceDetails requestDetails){
         return null;
     }
 
